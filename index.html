@@ -175,10 +175,8 @@
     <div class="big-heart" onclick="clickHeart()">&#128151;</div>
     <div class="gift-box" onclick="openGift()"></div>
     <div class="container">
-        <div class="video-container" id="videoContainer">
-            <video id="videoPlayer" loop>
-                <source src="music1.mp4" type="video/mp4">
-            </video>
+          <div class="video-container" id="videoContainer">
+            <iframe id="videoPlayer" src="https://www.youtube.com/embed/rGDtUULlzs4?enablejsapi=1" allowfullscreen></iframe>
         </div>
         <div class="slideshow-container" id="slideshow">
             <div class="slide active"><img src="23-08-15.jpg" alt="photo 1"></div>
@@ -193,8 +191,21 @@
     <script>
         let clickCount = 0;
         let videoIndex = 0;
-        const videos = ["music1.mp4", "music2.mp4"];
-        const videoPlayer = document.getElementById("videoPlayer");
+        const videos = ["rGDtUULlzs4", "nfJhX0ce8ck"];
+        let player, slideIndex = 0;
+
+        function onYouTubeIframeAPIReady() {
+            player = new YT.Player('videoPlayer', {
+                events: { 'onStateChange': onPlayerStateChange }
+            });
+        }
+
+        function onPlayerStateChange(event) {
+            if (event.data === YT.PlayerState.ENDED) {
+                videoIndex = (videoIndex + 1) % videos.length;
+                player.loadVideoById(videos[videoIndex]);
+            }
+        }
         function clickHeart() {
             if (clickCount < 9) {
                 createSmallHeart();
@@ -295,5 +306,6 @@
 
         setInterval(generateHearts, 500);
     </script>
+    <script src="https://www.youtube.com/iframe_api"></script>
 </body>
 </html>
