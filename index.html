@@ -10,12 +10,12 @@
             text-align: center;
             font-family: 'Arial', sans-serif;
             margin: 0;
-            height: 100vh;
+            min-height: 100vh;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            overflow: hidden;
+            overflow: auto;
             position: relative;
         }
 
@@ -24,26 +24,42 @@
             color: white;
             animation: fadeIn 2s ease-in-out;
         }
+
         .big-heart {
             font-size: 5rem;
             cursor: pointer;
             animation: beat 0.6s infinite alternate ease-in-out;
         }
-         @keyframes beat {
-            from { transform: scale(1); }
-            to { transform: scale(1.2); }
+
+        @keyframes beat {
+            from {
+                transform: scale(1);
+            }
+
+            to {
+                transform: scale(1.2);
+            }
         }
-         .small-heart {
-            position: absolute;
+
+        .small-heart {
+            position: fixed;
             font-size: 2rem;
             color: red;
             animation: floatUp 1s ease-out forwards;
         }
 
         @keyframes floatUp {
-            from { transform: translateY(0); opacity: 1; }
-            to { transform: translateY(-50px); opacity: 0; }
+            from {
+                transform: translateY(0);
+                opacity: 1;
+            }
+
+            to {
+                transform: translateY(-50px);
+                opacity: 0;
+            }
         }
+
         .gift-box {
             width: 150px;
             height: 150px;
@@ -52,6 +68,7 @@
             cursor: pointer;
             border-radius: 10px;
             box-shadow: 2px 2px 10px rgba(255, 255, 255, 0.5);
+            display: none;
         }
 
             .gift-box:before {
@@ -77,8 +94,14 @@
             justify-content: center;
             align-items: center;
             gap: 20px;
+            flex-wrap: wrap;
         }
 
+        @media (max-width: 650px) {
+            .container {
+                flex-direction: column;
+            }
+        }
         .slideshow-container {
             display: none;
             justify-content: center;
@@ -140,7 +163,7 @@
             }
 
             100% {
-                top: 100%;
+                top: 80vh;
                 opacity: 0;
             }
         }
@@ -149,7 +172,7 @@
 <body>
     <h1>To Dylan </h1>
     <h1>Happy Valentine's Day &#128151;</h1>
-     <div class="big-heart" onclick="clickHeart()">&#128151;</div>
+    <div class="big-heart" onclick="clickHeart()">&#128151;</div>
     <div class="gift-box" onclick="openGift()"></div>
     <div class="container">
         <div class="video-container" id="videoContainer">
@@ -184,7 +207,7 @@
                 startHeartRain();
             }
         }
-         function createSmallHeart() {
+        function createSmallHeart() {
             const heart = document.createElement("span");
             heart.classList.add("small-heart");
             heart.innerHTML = "&#128151;";
@@ -197,19 +220,32 @@
                 heart.remove();
             }, 1000);
         }
-         function startHeartRain() {
-            setInterval(() => {
+        function startHeartRain() {
+            let heartCount = 0; 
+            const maxHearts = 30; 
+
+            const interval = setInterval(() => {
+                if (heartCount >= maxHearts) {
+                    clearInterval(interval); 
+                    return;
+                }
+
                 const heart = document.createElement("span");
                 heart.classList.add("heart");
                 heart.innerHTML = "&#128151;";
                 heart.style.left = Math.random() * 100 + "vw";
+                heart.style.top = "-10px"; 
                 document.body.appendChild(heart);
+
+                heartCount++;
 
                 setTimeout(() => {
                     heart.remove();
+                    heartCount--;
                 }, 5000);
             }, 500);
         }
+
 
 
 
