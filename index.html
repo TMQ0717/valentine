@@ -58,6 +58,7 @@
             justify-content: center;
             align-items: center;
             gap: 20px;
+            flex-wrap: wrap;
         }
 
         .slideshow-container {
@@ -124,6 +125,10 @@
                 top: 100%;
                 opacity: 0;
             }
+        }
+        @media (max-width: 599px) {
+            .container {
+            flex-direction: column;
         }
     </style>
 </head>
