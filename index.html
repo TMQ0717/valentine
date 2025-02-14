@@ -231,19 +231,22 @@
             }
         }
 
-        function createSmallHeart() {
-            const heart = document.createElement("span");
-            heart.classList.add("small-heart");
-            heart.innerHTML = "&#128151;";
-            heart.style.left = "50%";
-            heart.style.top = "50%";
-            heart.style.transform = "translate(-50%, -50%)";
-            document.body.appendChild(heart);
+     function createSmallHeart() {
+        const heart = document.createElement("span");
+        heart.classList.add("small-heart");
+        heart.innerHTML = "&#128151;";
+        heart.style.left = "50%";
+        heart.style.top = "50%";
+        heart.style.transform = "translate(-50%, -50%)";
+        document.body.appendChild(heart);
 
-            setTimeout(() => {
-                heart.remove();
-            }, 1000);
-        }
+        setTimeout(() => {
+            heart.style.transition = "opacity 0.5s ease-out";
+            heart.style.opacity = "0";
+            setTimeout(() => heart.remove(), 500); 
+        }, 800);
+    }
+
 
         function startHeartRain() {
             let heartCount = 0;
