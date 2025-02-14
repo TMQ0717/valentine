@@ -308,17 +308,47 @@
         window.addEventListener("resize", adjustLayout);
         document.addEventListener("DOMContentLoaded", adjustLayout);
 
-        function generateHearts() {
+      function generateHearts() {
             const heart = document.createElement("span");
             heart.classList.add("heart");
             heart.innerHTML = "&#128151;";
             heart.style.left = Math.random() * 100 + "vw";
             document.body.appendChild(heart);
 
-            setTimeout(() => {
+    
+            heart.addEventListener('animationend', () => {
                 heart.remove();
-            }, 5000);
+            });
         }
+
+
+        const style = document.createElement('style');
+        style.textContent = `
+        .heart {
+            position: absolute;
+            font-size: 2rem;
+            color: red;
+            animation: fall 5s linear;
+            opacity: 1;
+        }
+
+        @keyframes fall {
+            0% {
+                top: -10%;
+                opacity: 1;
+            }
+    
+            90% {
+                opacity: 1;
+            }
+
+            100% {
+                top: 90vh;
+                opacity: 0;
+            }
+        }
+        `;
+        document.head.appendChild(style);
 
         setInterval(generateHearts, 500);
     </script>
